@@ -12,7 +12,8 @@ module.exports = {
     module:{
       rules: [
           { test: /\.scss$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: [ 'css-loader','sass-loader'] }) },
-          { test: /\.js$/, exclude: /node_modules/, use:'babel-loader'}
+          { test: /\.js$/, exclude: /node_modules/, use:'babel-loader'},
+          { test: /\.pug$/, use:['html-loader','pug-html-loader']}
       ]
     },
     devServer:{
@@ -27,7 +28,7 @@ module.exports = {
         // },
         hash: true,
         excludeChunks: ['contact'],
-        template: './src/index.ejs'
+        template: './src/index.pug'
     }),
     new HtmlWebpackPlugin({
         title: 'Contact Page',
