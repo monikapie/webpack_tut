@@ -1,3 +1,3 @@
-const css = require('./app.scss')
+const css = require('./app.scss');
 
-console.log('Hello again not from file!')
+console.log('Hello again !');
