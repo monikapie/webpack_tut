@@ -1,5 +1,7 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var webpack = require('webpack');
+var path = require("path");
 
 module.exports = {
     entry: {
@@ -11,7 +13,7 @@ module.exports = {
     },
     module:{
       rules: [
-          { test: /\.scss$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: [ 'css-loader','sass-loader'] }) },
+          { test: /\.scss$/, use: ['style-loader','css-loader','sass-loader']},
           { test: /\.js$/, exclude: /node_modules/, use:'babel-loader'},
           { test: /\.pug$/, use:['html-loader','pug-html-loader']}
       ]
@@ -19,9 +21,11 @@ module.exports = {
     devServer:{
       compress: true,
       stats: "errors-only",
+      hot: true,
       open: true
     },
-    plugins: [new HtmlWebpackPlugin({
+    plugins: [
+        new HtmlWebpackPlugin({
         title: 'Project Demo',
         // minify: {
         //     collapseWhitespace: true
@@ -29,17 +33,20 @@ module.exports = {
         hash: true,
         excludeChunks: ['contact'],
         template: './src/index.pug'
-    }),
-    new HtmlWebpackPlugin({
-        title: 'Contact Page',
-        hash: true,
-        chunks: ['contact'],
-        filename: 'contact.html',
-        template: './src/contact.html'
-    }),
-    new ExtractTextPlugin({
-        filename: "app.css",
-        disable: false,
-        allChunks: true
-    })]
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Contact Page',
+            hash: true,
+            chunks: ['contact'],
+            filename: 'contact.html',
+            template: './src/contact.html'
+        }),
+        new ExtractTextPlugin({
+            filename: "app.css",
+            disable: true,
+            allChunks: true
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin()
+    ]
 };
