@@ -20,7 +20,13 @@ module.exports = {
       rules: [
           { test: /\.scss$/, use: cssConfig},
           { test: /\.js$/, exclude: /node_modules/, use:'babel-loader'},
-          { test: /\.pug$/, use:['html-loader','pug-html-loader']}
+          { test: /\.pug$/, use:['html-loader','pug-html-loader']},
+          { test: /\.(jpe?g|png|gif|svg)$/, use:[
+              'file-loader?name=images/[name].[ext]',
+              // 'file-loader?name=[name].[ext]&outputPath=images/&publicPath=images/',
+              'image-webpack-loader'
+              ]}
+
       ]
     },
     devServer:{
